@@ -1,0 +1,340 @@
+Attribute VB_Name = "UnpivotTools"
+Option Explicit
+
+Sub unpivot()
+'Sheets("TEST").Range("A1:AAA200000").ClearContents
+
+Dim sn As Variant
+Dim colOrig As Variant
+Dim colOriginalLength As Integer
+Dim sk As Variant
+Dim x As Variant
+Dim y As Variant
+Dim sp As Variant
+Dim j As Variant
+Dim m As Variant
+Dim n As Variant
+Dim RowLen As Long
+Dim wsNew As Worksheet
+Dim wsCalc As Worksheet
+Dim i As Long
+Dim colNum As Integer
+Dim rng As Range
+Dim xtraRange As Range
+Dim NewBook As Workbook
+Dim screenUpdateState As Variant
+Dim statusBarState As Variant
+Dim calcState As Variant
+Dim eventsState As Variant
+
+screenUpdateState = Application.ScreenUpdating
+statusBarState = Application.DisplayStatusBar
+calcState = Application.Calculation
+eventsState = Application.EnableEvents
+
+Application.ScreenUpdating = False
+Application.DisplayStatusBar = False
+Application.Calculation = xlCalculationManual
+Application.EnableEvents = False
+
+MsgBox "Excel will be unavailable for about a minute.  Press OK when ready."
+
+Set wsCalc = ActiveWorkbook.Worksheets("CALCULATIONS")
+Call AddNew(NewBook)
+Set wsNew = NewBook.Sheets("DATA")
+
+'Year and Month, sets original size of block for all lengths
+sn = wsCalc.Range("BH5:DE2000").Value
+x = UBound(sn, 2)
+y = UBound(sn, 2) - x
+
+ReDim sp(1 To x * (UBound(sn) - 1), 1 To 4)
+
+For j = 1 To UBound(sp)
+m = (j - 1) Mod (UBound(sn) - 1) + 2
+n = (j - 1) \ (UBound(sn) - 1) + y + 1
+
+sp(j, 1) = Left(sn(1, n), 4) 'Does the year unpivot
+sp(j, 2) = Left(sn(1, n), 4) & " / " & Right(sn(1, n), 2) 'Does the fiscal month unpivot
+Next
+
+wsNew.Cells(2, 1).Resize(UBound(sp), UBound(sp, 2)) = sp
+RowLen = UBound(sp)
+
+
+'Proper formatting of columns
+wsNew.Columns(1).NumberFormat = "@"
+wsNew.Columns(4).NumberFormat = "@"
+wsNew.Columns(5).NumberFormat = "@"
+wsNew.Columns(3).NumberFormat = "@"
+wsNew.Columns(15).NumberFormat = "@"
+wsNew.Columns(17).NumberFormat = "@"
+
+Call createSingleValueColumns(RowLen, 3, "COMP0001", wsNew) '
+Call repeatColumns(wsCalc.Range("F6:F2000"), 4, RowLen, wsNew)
+Call createSingleValueColumns(RowLen, 5, "5000", wsNew)
+Call repeatColumns(wsCalc.Range("J6:J2000"), 6, RowLen, wsNew)
+Call repeatColumns(wsCalc.Range("L6:L2000"), 7, RowLen, wsNew)
+Call createSingleValueColumns(RowLen, 14, "COMP0001", wsNew)
+Call repeatColumns(wsCalc.Range("M6:M2000"), 15, RowLen, wsNew)
+Call repeatColumnsWithConcat(wsCalc.Range("M6:M2000"), wsCalc.Range("N6:N2000"), 15, RowLen, wsNew)
+Call repeatColumns(wsCalc.Range("W6:W2000"), 16, RowLen, wsNew)
+Call repeatColumns(wsCalc.Range("M6:M2000"), 17, RowLen, wsNew)
+Call repeatColumns(wsCalc.Range("O6:O2000"), 20, RowLen, wsNew)
+Call transposeBlock(wsCalc.Range("ACF5:AEC2000"), 25, wsNew)
+Call transposeBlock(wsCalc.Range("BIX5:BKU2000"), 28, wsNew)
+Call transposeBlock(wsCalc.Range("CCD5:CEA2000"), 31, wsNew)
+'Call transposeBlock(wsCalc.Range("ACF5:AEC2000"), 35, wsNew) Put these in later
+'Call transposeBlock(wsCalc.Range("AGB5:AHY2000"), 38, wsNew) Put these in later
+Call transposeBlock(wsCalc.Range("OT5:QQ2000"), 41, wsNew)
+Call transposeBlock(wsCalc.Range("QR5:SO2000"), 42, wsNew)
+Call createSingleValueColumns(RowLen, 43, 1, wsNew)
+Call createSingleValueColumns(RowLen, 44, 1, wsNew)
+Call createSingleValueColumns(RowLen, 45, 1, wsNew)
+Call createSingleValueColumns(RowLen, 46, 1, wsNew)
+Call createSingleValueColumns(RowLen, 47, 1, wsNew)
+Call createSingleValueColumns(RowLen, 48, 1, wsNew)
+Call createSingleValueColumns(RowLen, 49, "Budget", wsNew)
+Call transposeBlock(wsCalc.Range("AVL5:AXI2000"), 50, wsNew)
+Call transposeBlock(wsCalc.Range("AXJ5:AZG2000"), 51, wsNew)
+Call transposeBlock(wsCalc.Range("AZH5:BBF2000"), 52, wsNew)
+Call transposeBlock(wsCalc.Range("BDD5:BFA2000"), 53, wsNew)
+Call transposeBlock(wsCalc.Range("BFB5:BGY2000"), 54, wsNew)
+Call transposeBlock(wsCalc.Range("BGZ5:BIW2000"), 55, wsNew)
+Call transposeBlock(wsCalc.Range("ATN5:AVK2000"), 56, wsNew)
+Call transposeBlock(wsCalc.Range("BIX5:BKU2000"), 57, wsNew)
+Call transposeBlock(wsCalc.Range("BKV5:BMS2000"), 58, wsNew)
+Call transposeBlock(wsCalc.Range("BMT5:BOQ2000"), 59, wsNew)
+Call transposeBlock(wsCalc.Range("BOR5:BQO2000"), 60, wsNew)
+Call transposeBlock(wsCalc.Range("BQP5:BSM2000"), 61, wsNew)
+Call transposeBlock(wsCalc.Range("BSN5:BUK2000"), 62, wsNew)
+Call transposeBlock(wsCalc.Range("BUL5:BWI2000"), 63, wsNew)
+Call transposeBlock(wsCalc.Range("BWJ5:BYG2000"), 64, wsNew)
+Call transposeBlock(wsCalc.Range("BYH5:CFY2000"), 65, wsNew)
+Call transposeBlock(wsCalc.Range("CAF5:CCC2000"), 66, wsNew)
+Call transposeBlock(wsCalc.Range("CCD5:CEA2000"), 67, wsNew)
+Call transposeBlock(wsCalc.Range("CEB5:CFY2000"), 68, wsNew)
+Call transposeBlock(wsCalc.Range("CFZ5:CHW2000"), 69, wsNew)
+Call transposeBlock(wsCalc.Range("CHX5:CJU2000"), 70, wsNew)
+Call transposeBlock(wsCalc.Range("CJV5:CLS2000"), 71, wsNew)
+Call transposeBlock(wsCalc.Range("CLT5:CNQ2000"), 72, wsNew)
+Call transposeBlock(wsCalc.Range("CNR5:CPO2000"), 73, wsNew)
+Call transposeBlock(wsCalc.Range("CPP5:CRM2000"), 74, wsNew)
+Call transposeBlock(wsCalc.Range("CRN5:CTK2000"), 75, wsNew)
+Call transposeBlock(wsCalc.Range("CTL5:CVI2000"), 76, wsNew)
+Call transposeBlock(wsCalc.Range("CVJ5:CXG2000"), 77, wsNew)
+Call transposeBlock(wsCalc.Range("CXH5:CZE2000"), 78, wsNew)
+Call transposeBlock(wsCalc.Range("CZF5:DBC2000"), 79, wsNew)
+Call transposeBlock(wsCalc.Range("DBD5:DDA2000"), 80, wsNew)
+
+
+
+Call CreateTitles(wsNew)
+Call DeleteEndRows(wsNew)
+
+Application.ScreenUpdating = True
+Application.DisplayStatusBar = True
+Application.Calculation = xlCalculationManual
+Application.EnableEvents = True
+
+
+
+End Sub
+
+Sub repeatColumns(rng As Range, col As Integer, RowLen As Long, wsNew As Object)
+
+Dim sk As Variant
+Dim sn As Variant
+Dim j As Variant
+Dim colOrig As Variant
+Dim colOriginalLength As Integer
+
+colOrig = rng.Value
+colOriginalLength = UBound(colOrig, 1) - LBound(colOrig, 1) + 1
+ReDim sk(1 To RowLen, 1 To 1)
+
+For j = 1 To UBound(sk)
+sk(j, 1) = colOrig(((j - 1) Mod colOriginalLength) + 1, 1)
+Next
+
+wsNew.Cells(2, col).Resize(RowLen, 1) = sk
+
+Application.ScreenUpdating = True
+Application.DisplayStatusBar = True
+Application.Calculation = xlCalculationManual
+Application.EnableEvents = True
+
+
+End Sub
+
+Sub createSingleValueColumns(RowLen As Long, colNum As Integer, Val As Variant, wsNew As Object)
+Dim i As Long
+    For i = 2 To (RowLen + 1)
+        wsNew.Cells(i, colNum) = Val
+    Next i
+End Sub
+
+Sub transposeBlock(rng As Range, colNum As Integer, wsNew As Object)
+Dim sz As Variant
+Dim sp As Variant
+Dim x As Long
+Dim y As Long
+Dim j As Long
+Dim m As Long
+Dim n As Long
+Dim rd As Range
+
+sz = rng.Value
+x = UBound(sz, 2)
+y = UBound(sz, 2) - x
+
+
+ReDim sp(1 To x * (UBound(sz) - 1), 1 To 1)
+
+For j = 1 To UBound(sp)
+m = (j - 1) Mod (UBound(sz) - 1) + 2
+n = (j - 1) \ (UBound(sz) - 1) + y + 1
+
+sp(j, 1) = sz(m, n) 'does the array block
+Next
+
+Set rd = wsNew.Cells(2, colNum).Resize(UBound(sp), 1)
+rd = sp
+
+End Sub
+
+Sub CreateTitles(wsNew As Object)
+wsNew.Cells(1, 1) = "Fiscal Year"
+wsNew.Cells(1, 2) = "Fiscal Month"
+wsNew.Cells(1, 3) = "Company Code"
+wsNew.Cells(1, 4) = "Profit Center Code"
+wsNew.Cells(1, 5) = "Account Category Code"
+wsNew.Cells(1, 6) = "Customer Name"
+wsNew.Cells(1, 7) = "Ship To City"
+wsNew.Cells(1, 8) = "Ship To Customer GL Class"
+wsNew.Cells(1, 9) = "Ship-To Customer Number"
+wsNew.Cells(1, 10) = "Sales Invoice Number"
+wsNew.Cells(1, 11) = "Invoice Actual Ship Date"
+wsNew.Cells(1, 12) = "Invoiced Date"
+wsNew.Cells(1, 13) = "Analytics Mfg Source"
+wsNew.Cells(1, 14) = "Analytics Mfg Source Description"
+wsNew.Cells(1, 15) = "Product Number"
+wsNew.Cells(1, 16) = "Fill Code"
+wsNew.Cells(1, 17) = "Base Product Number"
+wsNew.Cells(1, 18) = "Product GL Class and Description"
+wsNew.Cells(1, 19) = "Product Description"
+wsNew.Cells(1, 20) = "Base UOM"
+wsNew.Cells(1, 21) = "Conversion Factor to GAL"
+wsNew.Cells(1, 22) = "Conversion Factor to LB"
+wsNew.Cells(1, 23) = "Sales Class Description"
+wsNew.Cells(1, 24) = "BPA"
+wsNew.Cells(1, 25) = "Net Invoiced Amount at Doc"
+wsNew.Cells(1, 26) = "Net Invoiced Amount at AFX"
+wsNew.Cells(1, 27) = "Ext Total STD Cost at Document Rate"
+wsNew.Cells(1, 28) = "Ext Raw Material STD Cost at Document Rate"
+wsNew.Cells(1, 29) = "Ext Packaging STD Cost at Document Rate"
+wsNew.Cells(1, 30) = "Ext Warehouse STD Cost at Document Rate"
+wsNew.Cells(1, 31) = "Ext Fixed Conversion STD Cost at Document Rate"
+wsNew.Cells(1, 32) = "Ext Variable Conversion STD Cost at Document Rate"
+wsNew.Cells(1, 33) = "Ext COSR STD Cost at Document Rate"
+wsNew.Cells(1, 34) = "Ext Total Actual Cost at Document Rate"
+wsNew.Cells(1, 35) = "Ext Raw Material Actual Cost at Document Rate"
+wsNew.Cells(1, 36) = "Ext Packaging Actual Cost at Document Rate"
+wsNew.Cells(1, 37) = "Ext Warehouse Actual Cost at Document Rate"
+wsNew.Cells(1, 38) = "Ext Fixed Conversion Actual Cost at Document Rate"
+wsNew.Cells(1, 39) = "Ext Variable Conversion Actual Cost at Document Rate"
+wsNew.Cells(1, 40) = "Ext COSR Actual Cost at Document Rate"
+wsNew.Cells(1, 41) = "Net Quantity"
+wsNew.Cells(1, 42) = "Net Quantity in GAL"
+wsNew.Cells(1, 43) = "Average Rate"
+wsNew.Cells(1, 44) = "Budget Rate"
+wsNew.Cells(1, 45) = "Local Exchange Rate"
+wsNew.Cells(1, 46) = "Corp Exchange Rate"
+wsNew.Cells(1, 47) = "Local Currency Code"
+wsNew.Cells(1, 48) = "Sales Class Description"
+wsNew.Cells(1, 49) = "SOURCE"
+wsNew.Cells(1, 50) = "Pricing-Invoice"
+wsNew.Cells(1, 51) = "Pricing-Rebates"
+wsNew.Cells(1, 52) = "Pricing-Mechanisms"
+wsNew.Cells(1, 53) = "Volume Change"
+wsNew.Cells(1, 54) = "Mix Change"
+wsNew.Cells(1, 55) = "Other"
+wsNew.Cells(1, 56) = "Total Net Sales"
+wsNew.Cells(1, 57) = "RM + Pkg - Standard Cost"
+wsNew.Cells(1, 58) = "RM + Pkg - AVERAGE Standard Cost"
+wsNew.Cells(1, 59) = "RM (Cost Change Impact)"
+wsNew.Cells(1, 60) = "RM (Volume Impact)"
+wsNew.Cells(1, 61) = "RM (Mix Impact)"
+wsNew.Cells(1, 62) = "RM STD (OTHER Impact)"
+wsNew.Cells(1, 63) = "RM (COS RESERVE)"
+wsNew.Cells(1, 64) = "PPV & RM Std Cost Change Allocation on Gallons"
+wsNew.Cells(1, 65) = "RM Costs - Other"
+wsNew.Cells(1, 66) = "Total Raw Material Costs"
+wsNew.Cells(1, 67) = "Conversion Costs - Standard Costs"
+wsNew.Cells(1, 68) = "Conversion Costs - AVERAGE Standard Cost"
+wsNew.Cells(1, 69) = "CONV COST (Cost Change Impact)"
+wsNew.Cells(1, 70) = "CONV COST (Volume Impact)"
+wsNew.Cells(1, 71) = "CONV COST (Mix Impact)"
+wsNew.Cells(1, 72) = "CONV COST (Other Impact)"
+wsNew.Cells(1, 73) = "Under(Over) Absorption & CC Std Cost Change Allocation on Gallons"
+wsNew.Cells(1, 74) = "Conversion Costs - Other"
+wsNew.Cells(1, 75) = "Converison Costs - Total"
+wsNew.Cells(1, 76) = "Plant Warehousing Allocation on Gallons"
+wsNew.Cells(1, 77) = "Field Warehousing Allocation on Gallons"
+wsNew.Cells(1, 78) = "Freight OUT Allocation on Gallons"
+wsNew.Cells(1, 79) = "Other COGS"
+wsNew.Cells(1, 80) = "Gross Margin"
+
+
+
+End Sub
+
+Sub repeatColumnsWithConcat(rng As Range, xtraRange As Range, col As Integer, RowLen As Long, wsNew As Object)
+
+Dim sk As Variant
+Dim sn As Variant
+Dim j As Variant
+Dim colOrig As Variant
+Dim colOriginalLength As Integer
+Dim colConcat As Variant
+
+
+colOrig = rng.Value
+colConcat = xtraRange.Value
+For j = 1 To UBound(colOrig)
+    colOrig(j, 1) = colOrig(j, 1) & "." & colConcat(j, 1)
+Next
+
+colOriginalLength = UBound(colOrig, 1) - LBound(colOrig, 1) + 1
+ReDim sk(1 To RowLen, 1 To 1)
+
+For j = 1 To UBound(sk)
+    sk(j, 1) = colOrig(((j - 1) Mod colOriginalLength) + 1, 1)
+Next
+
+wsNew.Cells(2, col).Resize(RowLen, 1) = sk
+
+
+End Sub
+
+Sub DeleteEndRows(wsNew As Object)
+
+With Range("F2:F100000")
+    .AutoFilter 1, 0
+    .SpecialCells(12).EntireRow.Delete
+End With
+ActiveSheet.AutoFilterMode = False
+End Sub
+ 
+Sub AddNew(NewBook As Object)
+'Dim NewBook As Workbook
+Set NewBook = Workbooks.Add
+    With NewBook
+        .Title = "Calculations Output"
+        .Subject = "Sales"
+        .SaveAs Filename:="Calculations Tab Data.xlsx"
+        .Worksheets.Add().Name = "DATA"
+    End With
+End Sub
+
+
