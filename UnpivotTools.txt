@@ -61,6 +61,8 @@ Next
 wsNew.Cells(2, 1).Resize(UBound(sp), UBound(sp, 2)) = sp
 RowLen = UBound(sp)
 
+'ADD SOMETHING TO MAKE THESE COLUMNS GET PASSED A NAME AND DO WHAT THEY NEED TO DO FOR NAMING
+'MAKE THESE AUTOMATICALLY MEASURE THE ARRAY SO DONT NEED TO PASS EXACT COLUMNS
 
 'Proper formatting of columns
 wsNew.Columns(1).NumberFormat = "@"
@@ -70,64 +72,62 @@ wsNew.Columns(3).NumberFormat = "@"
 wsNew.Columns(15).NumberFormat = "@"
 wsNew.Columns(17).NumberFormat = "@"
 
-Call createSingleValueColumns(RowLen, 3, "COMP0001", wsNew) '
-Call repeatColumns(wsCalc.Range("F6:F2000"), 4, RowLen, wsNew)
-Call createSingleValueColumns(RowLen, 5, "5000", wsNew)
-Call repeatColumns(wsCalc.Range("J6:J2000"), 6, RowLen, wsNew)
-Call repeatColumns(wsCalc.Range("L6:L2000"), 7, RowLen, wsNew)
-Call createSingleValueColumns(RowLen, 14, "COMP0001", wsNew)
-Call repeatColumns(wsCalc.Range("M6:M2000"), 15, RowLen, wsNew)
-Call repeatColumnsWithConcat(wsCalc.Range("M6:M2000"), wsCalc.Range("N6:N2000"), 15, RowLen, wsNew)
-Call repeatColumns(wsCalc.Range("W6:W2000"), 16, RowLen, wsNew)
-Call repeatColumns(wsCalc.Range("M6:M2000"), 17, RowLen, wsNew)
-Call repeatColumns(wsCalc.Range("O6:O2000"), 20, RowLen, wsNew)
-Call transposeBlock(wsCalc.Range("ACF5:AEC2000"), 25, wsNew)
-Call transposeBlock(wsCalc.Range("BIX5:BKU2000"), 28, wsNew)
-Call transposeBlock(wsCalc.Range("CCD5:CEA2000"), 31, wsNew)
+Call createSingleValueColumns(RowLen, 3, "COMP0001", wsNew) 'Dupes the company name
+Call repeatColumns(wsCalc.Range("F6:F2000"), 4, RowLen, wsNew) 'Handles PFC
+Call createSingleValueColumns(RowLen, 5, "5000", wsNew) 'Dup account number
+Call repeatColumns(wsCalc.Range("J6:J2000"), 6, RowLen, wsNew) 'Customer Name
+Call repeatColumns(wsCalc.Range("L6:L2000"), 7, RowLen, wsNew) 'Ship-To City
+Call repeatColumnsWithConcat(wsCalc.Range("M6:M2000"), wsCalc.Range("N6:N2000"), 15, RowLen, wsNew) 'Product Num with Fill code
+Call repeatColumns(wsCalc.Range("W6:W2000"), 16, RowLen, wsNew)  'Fill "code"
+Call repeatColumns(wsCalc.Range("M6:M2000"), 17, RowLen, wsNew)  'Base Product Number
+Call repeatColumns(wsCalc.Range("O6:O2000"), 20, RowLen, wsNew) 'UOM
+Call transposeBlock(wsCalc.Range("ACF5:AEC2000"), 25, wsNew) 'Gross Sales
+Call transposeBlock(wsCalc.Range("BIX5:BKU2000"), 28, wsNew) 'RM + Pkg Standard Cost
+Call transposeBlock(wsCalc.Range("CCD5:CEA2000"), 31, wsNew) 'Conversion Costs at Standard
 'Call transposeBlock(wsCalc.Range("ACF5:AEC2000"), 35, wsNew) Put these in later
 'Call transposeBlock(wsCalc.Range("AGB5:AHY2000"), 38, wsNew) Put these in later
-Call transposeBlock(wsCalc.Range("OT5:QQ2000"), 41, wsNew)
-Call transposeBlock(wsCalc.Range("QR5:SO2000"), 42, wsNew)
-Call createSingleValueColumns(RowLen, 43, 1, wsNew)
-Call createSingleValueColumns(RowLen, 44, 1, wsNew)
-Call createSingleValueColumns(RowLen, 45, 1, wsNew)
-Call createSingleValueColumns(RowLen, 46, 1, wsNew)
-Call createSingleValueColumns(RowLen, 47, 1, wsNew)
-Call createSingleValueColumns(RowLen, 48, 1, wsNew)
-Call createSingleValueColumns(RowLen, 49, "Budget", wsNew)
-Call transposeBlock(wsCalc.Range("AVL5:AXI2000"), 50, wsNew)
-Call transposeBlock(wsCalc.Range("AXJ5:AZG2000"), 51, wsNew)
-Call transposeBlock(wsCalc.Range("AZH5:BBF2000"), 52, wsNew)
-Call transposeBlock(wsCalc.Range("BDD5:BFA2000"), 53, wsNew)
-Call transposeBlock(wsCalc.Range("BFB5:BGY2000"), 54, wsNew)
-Call transposeBlock(wsCalc.Range("BGZ5:BIW2000"), 55, wsNew)
-Call transposeBlock(wsCalc.Range("ATN5:AVK2000"), 56, wsNew)
-Call transposeBlock(wsCalc.Range("BIX5:BKU2000"), 57, wsNew)
-Call transposeBlock(wsCalc.Range("BKV5:BMS2000"), 58, wsNew)
-Call transposeBlock(wsCalc.Range("BMT5:BOQ2000"), 59, wsNew)
-Call transposeBlock(wsCalc.Range("BOR5:BQO2000"), 60, wsNew)
-Call transposeBlock(wsCalc.Range("BQP5:BSM2000"), 61, wsNew)
-Call transposeBlock(wsCalc.Range("BSN5:BUK2000"), 62, wsNew)
-Call transposeBlock(wsCalc.Range("BUL5:BWI2000"), 63, wsNew)
-Call transposeBlock(wsCalc.Range("BWJ5:BYG2000"), 64, wsNew)
-Call transposeBlock(wsCalc.Range("BYH5:CFY2000"), 65, wsNew)
-Call transposeBlock(wsCalc.Range("CAF5:CCC2000"), 66, wsNew)
-Call transposeBlock(wsCalc.Range("CCD5:CEA2000"), 67, wsNew)
-Call transposeBlock(wsCalc.Range("CEB5:CFY2000"), 68, wsNew)
-Call transposeBlock(wsCalc.Range("CFZ5:CHW2000"), 69, wsNew)
-Call transposeBlock(wsCalc.Range("CHX5:CJU2000"), 70, wsNew)
-Call transposeBlock(wsCalc.Range("CJV5:CLS2000"), 71, wsNew)
-Call transposeBlock(wsCalc.Range("CLT5:CNQ2000"), 72, wsNew)
-Call transposeBlock(wsCalc.Range("CNR5:CPO2000"), 73, wsNew)
-Call transposeBlock(wsCalc.Range("CPP5:CRM2000"), 74, wsNew)
-Call transposeBlock(wsCalc.Range("CRN5:CTK2000"), 75, wsNew)
-Call transposeBlock(wsCalc.Range("CTL5:CVI2000"), 76, wsNew)
-Call transposeBlock(wsCalc.Range("CVJ5:CXG2000"), 77, wsNew)
-Call transposeBlock(wsCalc.Range("CXH5:CZE2000"), 78, wsNew)
-Call transposeBlock(wsCalc.Range("CZF5:DBC2000"), 79, wsNew)
-Call transposeBlock(wsCalc.Range("DBD5:DDA2000"), 80, wsNew)
-
-
+Call transposeBlock(wsCalc.Range("OT5:QQ2000"), 41, wsNew) 'volumes in UOM
+Call transposeBlock(wsCalc.Range("QR5:SO2000"), 42, wsNew) 'volumes in Gallons
+Call createSingleValueColumns(RowLen, 43, 1, wsNew) 'Exchange Rate Nonsense
+Call createSingleValueColumns(RowLen, 44, 1, wsNew) 'Exchange Rate Nonsense
+Call createSingleValueColumns(RowLen, 45, 1, wsNew) 'Exchange Rate Nonsense
+Call createSingleValueColumns(RowLen, 46, 1, wsNew) 'Exchange Rate Nonsense
+Call createSingleValueColumns(RowLen, 47, 1, wsNew) 'Exchange Rate Nonsense
+Call createSingleValueColumns(RowLen, 48, 1, wsNew) 'Exchange Rate Nonsense
+Call createSingleValueColumns(RowLen, 49, "Budget", wsNew) 'Straight Name as Budget for now  -MAKE THIS AUTOMATIC IN FUTURE ADDITIONS
+Call transposeBlock(wsCalc.Range("AVL5:AXI2000"), 50, wsNew) 'Pricing (Invoice Price Change Impact)
+Call transposeBlock(wsCalc.Range("AXJ5:AZG2000"), 51, wsNew) 'Pricing (Rebate Change Impact)
+Call transposeBlock(wsCalc.Range("AZH5:BBE2000"), 52, wsNew) 'Pricing (Mechanism Change Impact)
+Call transposeBlock(wsCalc.Range("BDD5:BFA2000"), 53, wsNew) 'Pricing (Volume Impact)
+Call transposeBlock(wsCalc.Range("BFB5:BGY2000"), 54, wsNew) 'Pricing (Mix Impact)
+Call transposeBlock(wsCalc.Range("BGZ5:BIW2000"), 55, wsNew) 'Price Impact (Other)
+Call transposeBlock(wsCalc.Range("ATN5:AVK2000"), 56, wsNew) 'TOTAL NET SALES $
+Call transposeBlock(wsCalc.Range("BIX5:BKU2000"), 57, wsNew) 'RM + Pkg - Standard Cost
+Call transposeBlock(wsCalc.Range("BKV5:BMS2000"), 58, wsNew) 'RM + Pkg - AVERAGE Standard Cost
+Call transposeBlock(wsCalc.Range("BMT5:BOQ2000"), 59, wsNew) 'RM (Cost Change Impact)
+Call transposeBlock(wsCalc.Range("BOR5:BQO2000"), 60, wsNew) 'RM (Volume Impact)
+Call transposeBlock(wsCalc.Range("BQP5:BSM2000"), 61, wsNew) 'RM (Volume Mix Impact)
+Call transposeBlock(wsCalc.Range("BSN5:BUK2000"), 62, wsNew) 'RM STD (OTHER Impact)
+Call transposeBlock(wsCalc.Range("BUL5:BWI2000"), 63, wsNew) 'RM (COS RESERVE)
+Call transposeBlock(wsCalc.Range("BWJ5:BYG2000"), 64, wsNew) 'PPV & RM Std Cost Change Allocation on Gallons
+Call transposeBlock(wsCalc.Range("BYH5:CAE2000"), 65, wsNew) 'RM Costs - Other
+Call transposeBlock(wsCalc.Range("CAF5:CCC2000"), 66, wsNew) 'Total Raw Material Costs
+Call transposeBlock(wsCalc.Range("CCD5:CEA2000"), 67, wsNew) 'Conversion Costs - Standard Costs
+Call transposeBlock(wsCalc.Range("CEB5:CFY2000"), 68, wsNew) 'Conversion Costs - AVERAGE Standard Cost
+Call transposeBlock(wsCalc.Range("CFZ5:CHW2000"), 69, wsNew) 'CONV COST (Cost Change Impact)
+Call transposeBlock(wsCalc.Range("CHX5:CJU2000"), 70, wsNew) 'CONV COST (Volume Impact)
+Call transposeBlock(wsCalc.Range("CJV5:CLS2000"), 71, wsNew) 'CONV COST (Mix Impact)
+Call transposeBlock(wsCalc.Range("CLT5:CNQ2000"), 72, wsNew) 'CONV COST (Other Impact)
+Call transposeBlock(wsCalc.Range("CNR5:CPO2000"), 73, wsNew) 'Under(Over) Absorption & CC Std Cost Change Allocation on Gallons
+Call transposeBlock(wsCalc.Range("CPP5:CRM2000"), 74, wsNew) 'Conversion Costs - Other
+Call transposeBlock(wsCalc.Range("CRN5:CTK2000"), 75, wsNew) 'Converison Costs - Total
+Call transposeBlock(wsCalc.Range("CTL5:CVI2000"), 76, wsNew) 'Warehousing Allocation on Gallons
+Call transposeBlock(wsCalc.Range("CVJ5:CXG2000"), 77, wsNew) 'Research & Development
+Call transposeBlock(wsCalc.Range("CXH5:CZE2000"), 78, wsNew) 'Freight OUT Allocation on Gallons
+Call transposeBlock(wsCalc.Range("CZF5:DBC2000"), 79, wsNew) 'Other COGS
+Call transposeBlock(wsCalc.Range("DBD5:DDA2000"), 80, wsNew) 'GROSS MARGIN $
+Call transposeBlock(wsCalc.Range("DEZ5:DGW2000"), 81, wsNew) 'New/Lost Gallons
+Call transposeBlock(wsCalc.Range("DGX5:DIU2000"), 82, wsNew) 'New/Lost Sales
 
 Call CreateTitles(wsNew)
 Call DeleteEndRows(wsNew)
@@ -279,8 +279,8 @@ wsNew.Cells(1, 72) = "CONV COST (Other Impact)"
 wsNew.Cells(1, 73) = "Under(Over) Absorption & CC Std Cost Change Allocation on Gallons"
 wsNew.Cells(1, 74) = "Conversion Costs - Other"
 wsNew.Cells(1, 75) = "Converison Costs - Total"
-wsNew.Cells(1, 76) = "Plant Warehousing Allocation on Gallons"
-wsNew.Cells(1, 77) = "Field Warehousing Allocation on Gallons"
+wsNew.Cells(1, 76) = "Warehousing Allocation on Gallons"
+wsNew.Cells(1, 77) = "Research & Development"
 wsNew.Cells(1, 78) = "Freight OUT Allocation on Gallons"
 wsNew.Cells(1, 79) = "Other COGS"
 wsNew.Cells(1, 80) = "Gross Margin"
