@@ -262,10 +262,10 @@ wsNew.Cells(1, 20) = "Scenario"
 wsNew.Cells(1, 21) = "Pricing-Invoice"
 wsNew.Cells(1, 22) = "Pricing-Rebates"
 wsNew.Cells(1, 23) = "Pricing-Mechanisms"
-wsNew.Cells(1, 24) = "Pricing Impact - OTHER"
-wsNew.Cells(1, 25) = "Total Pricing"
-wsNew.Cells(1, 26) = "Volume Change"
-wsNew.Cells(1, 27) = "Mix Change"
+wsNew.Cells(1, 24) = "Total Pricing"
+wsNew.Cells(1, 25) = "Volume Change"
+wsNew.Cells(1, 26) = "Mix Change"
+wsNew.Cells(1, 27) = "Net Sales Change - OTHER"
 wsNew.Cells(1, 28) = "Other Net Sales"
 wsNew.Cells(1, 29) = "Total Net Sales"
 wsNew.Cells(1, 30) = "Mechanism Dollars"
@@ -273,33 +273,25 @@ wsNew.Cells(1, 31) = "Rebate Dollars"
 wsNew.Cells(1, 32) = "Other Rebate Dollars"
 wsNew.Cells(1, 33) = "RM + Pkg Standard Cost"
 wsNew.Cells(1, 34) = "RM + Pkg - AVERAGE Standard Cost"
-wsNew.Cells(1, 35) = "RM (Cost Change Impact)"
-wsNew.Cells(1, 36) = "RM (Volume Impact)"
-wsNew.Cells(1, 37) = "RM (Mix Impact)"
-wsNew.Cells(1, 38) = "RM STD (OTHER Impact)"
-wsNew.Cells(1, 39) = "RM (COS RESERVE)"
-wsNew.Cells(1, 40) = "PPV & RM Std Cost Change Allocation on Gallons"
-wsNew.Cells(1, 41) = "RM Costs - Other"
-wsNew.Cells(1, 42) = "Total Raw Material Costs"
-wsNew.Cells(1, 43) = "RM + Pkg - Actual Cost"
-wsNew.Cells(1, 44) = "Conversion Costs - Standard Costs"
-wsNew.Cells(1, 45) = "Conversion Costs - AVERAGE Standard Cost"
-wsNew.Cells(1, 46) = "CONV COST (Cost Change Impact)"
-wsNew.Cells(1, 47) = "CONV COST (Volume Impact)"
-wsNew.Cells(1, 48) = "CONV COST (Mix Impact)"
-wsNew.Cells(1, 49) = "CONV COST (Other Std Impact)"
-wsNew.Cells(1, 50) = "Under(Over) Absorption & CC Std Cost Change Allocation on Gallons"
-wsNew.Cells(1, 51) = "Conversion Costs - Other"
-wsNew.Cells(1, 52) = "Converison Costs - Total"
-wsNew.Cells(1, 53) = "Conversion - Actual Cost"
-wsNew.Cells(1, 54) = "Warehousing Allocation on Gallons"
-wsNew.Cells(1, 55) = "Research & Development"
-wsNew.Cells(1, 56) = "Freight OUT Allocation on Gallons"
-wsNew.Cells(1, 57) = "Other COGS"
-wsNew.Cells(1, 58) = "Gross Margin"
-wsNew.Cells(1, 59) = "New/Lost Gallons"
-wsNew.Cells(1, 60) = "New/Lost Sales"
-wsNew.Cells(1, 61) = "Subsegment"
+wsNew.Cells(1, 35) = "RM (COS RESERVE)"
+wsNew.Cells(1, 36) = "PPV & RM Std Cost Change Allocation on Gallons"
+wsNew.Cells(1, 37) = "RM Costs - Other"
+wsNew.Cells(1, 38) = "Total Raw Material Costs"
+wsNew.Cells(1, 39) = "RM + Pkg - Actual Cost"
+wsNew.Cells(1, 40) = "Conversion Costs - Standard Costs"
+wsNew.Cells(1, 41) = "Conversion Costs - AVERAGE Standard Cost"
+wsNew.Cells(1, 42) = "Under(Over) Absorption & CC Std Cost Change Allocation on Gallons"
+wsNew.Cells(1, 43) = "Conversion Costs - Other"
+wsNew.Cells(1, 44) = "Converison Costs - Total"
+wsNew.Cells(1, 45) = "Conversion - Actual Cost"
+wsNew.Cells(1, 46) = "Warehousing Allocation on Gallons"
+wsNew.Cells(1, 47) = "Research & Development"
+wsNew.Cells(1, 48) = "Freight OUT Allocation on Gallons"
+wsNew.Cells(1, 49) = "Other COGS"
+wsNew.Cells(1, 50) = "Gross Margin"
+wsNew.Cells(1, 51) = "New/Lost Gallons"
+wsNew.Cells(1, 52) = "New/Lost Sales"
+wsNew.Cells(1, 53) = "Subsegment"
 
 End Sub
 
@@ -425,10 +417,10 @@ Call createSingleValueColumns(RowLen, 20, (Format(Date - 28, "mmm")), wsNew) 'Sc
 Call transposeBlock(WsCalc.Range("AVL5:AXI2000"), 21, wsNew) 'Pricing (Invoice Price Change Impact)
 Call transposeBlock(WsCalc.Range("AXJ5:AZG2000"), 22, wsNew) 'Pricing (Rebate Change Impact)
 Call transposeBlock(WsCalc.Range("AZH5:BBE2000"), 23, wsNew) 'Pricing (Mechanism Change Impact)
-Call transposeBlock(WsCalc.Range("BGZ5:BIW2000"), 24, wsNew) 'Price Impact (Other)
-Call transposeBlock(WsCalc.Range("BBF5:BDC2000"), 25, wsNew) 'Total Pricing
-Call transposeBlock(WsCalc.Range("BDD5:BFA2000"), 26, wsNew) 'Pricing (Volume Impact)
-Call transposeBlock(WsCalc.Range("BFB5:BGY2000"), 27, wsNew) 'Pricing (Mix Impact)
+Call transposeBlock(WsCalc.Range("BBF5:BDC2000"), 24, wsNew) 'Total Pricing
+Call transposeBlock(WsCalc.Range("BDD5:BFA2000"), 25, wsNew) 'Pricing (Volume Impact)
+Call transposeBlock(WsCalc.Range("BFB5:BGY2000"), 26, wsNew) 'Pricing (Mix Impact)
+Call transposeBlock(WsCalc.Range("BGZ5:BIW2000"), 27, wsNew) 'Net Sales Change (Other)
 Call transposeBlock(WsCalc.Range("ARP5:ATM2000"), 28, wsNew) 'Other Net Sales
 Call transposeBlock(WsCalc.Range("ATN5:AVK2000"), 29, wsNew) 'TOTAL NET SALES $
 Call transposeBlock(WsCalc.Range("AJX5:ALU2000"), 30, wsNew) 'Mechanism Dollars
@@ -436,33 +428,25 @@ Call transposeBlock(WsCalc.Range("ANT5:APQ2000"), 31, wsNew) 'Rebate Dollars
 Call transposeBlock(WsCalc.Range("APR5:ARO2000"), 32, wsNew) 'Other Rebate Dollars
 Call transposeBlock(WsCalc.Range("BIX5:BKU2000"), 33, wsNew) 'RM + Pkg Standard Cost
 Call transposeBlock(WsCalc.Range("BKV5:BMS2000"), 34, wsNew) 'RM + Pkg - AVERAGE Standard Cost
-Call transposeBlock(WsCalc.Range("BMT5:BOQ2000"), 35, wsNew) 'RM (Cost Change Impact)
-Call transposeBlock(WsCalc.Range("BOR5:BQO2000"), 36, wsNew) 'RM (Volume Impact)
-Call transposeBlock(WsCalc.Range("BQP5:BSM2000"), 37, wsNew) 'RM (Mix Impact)
-Call transposeBlock(WsCalc.Range("BSN5:BUK2000"), 38, wsNew) 'RM STD (OTHER Impact)
-Call transposeBlock(WsCalc.Range("BUL5:BWI2000"), 39, wsNew) 'RM (COS RESERVE)
-Call transposeBlock(WsCalc.Range("BWJ5:BYG2000"), 40, wsNew) 'PPV & RM Std Cost Change Allocation on Gallons
-Call transposeBlock(WsCalc.Range("BYH5:CAE2000"), 41, wsNew) 'RM Costs - Other
-Call transposeBlock(WsCalc.Range("CAF5:CCC2000"), 42, wsNew) 'Total Raw Material Costs
-Call transposeBlock(WsCalc.Range("DIV5:DKS2000"), 43, wsNew) 'RM + Pkg - Actual Cost
-Call transposeBlock(WsCalc.Range("CCD5:CEA2000"), 44, wsNew) 'Conversion Costs at Standard
-Call transposeBlock(WsCalc.Range("CEB5:CFY2000"), 45, wsNew) 'Conversion Costs - AVERAGE Standard Cost
-Call transposeBlock(WsCalc.Range("CFZ5:CHW2000"), 46, wsNew) 'CONV COST (Cost Change Impact)
-Call transposeBlock(WsCalc.Range("CHX5:CJU2000"), 47, wsNew) 'CONV COST (Volume Impact)
-Call transposeBlock(WsCalc.Range("CJV5:CLS2000"), 48, wsNew) 'CONV COST (Mix Impact)
-Call transposeBlock(WsCalc.Range("CLT5:CNQ2000"), 49, wsNew) 'CONV COST (Other Impact)
-Call transposeBlock(WsCalc.Range("CNR5:CPO2000"), 50, wsNew) 'Under(Over) Absorption & CC Std Cost Change Allocation on Gallons
-Call transposeBlock(WsCalc.Range("CPP5:CRM2000"), 51, wsNew) 'Conversion Costs - Other
-Call transposeBlock(WsCalc.Range("CRN5:CTK2000"), 52, wsNew) 'Converison Costs - Total
-Call transposeBlock(WsCalc.Range("DKT5:DMQ2000"), 53, wsNew) 'Conversion - Actual Cost
-Call transposeBlock(WsCalc.Range("CTL5:CVI2000"), 54, wsNew) 'Warehousing Allocation on Gallons
-Call transposeBlock(WsCalc.Range("CVJ5:CXG2000"), 55, wsNew) 'Research & Development
-Call transposeBlock(WsCalc.Range("CXH5:CZE2000"), 56, wsNew) 'Freight OUT Allocation on Gallons
-Call transposeBlock(WsCalc.Range("CZF5:DBC2000"), 57, wsNew) 'Other COGS
-Call transposeBlock(WsCalc.Range("DBD5:DDA2000"), 58, wsNew) 'GROSS MARGIN $
-Call transposeBlock(WsCalc.Range("DEZ5:DGW2000"), 59, wsNew) 'New/Lost Gallons
-Call transposeBlock(WsCalc.Range("DGX5:DIU2000"), 60, wsNew) 'New/Lost Sales
-Call repeatColumns(WsCalc.Range("DMR6:DMR2000"), 61, RowLen, wsNew) 'Handles Food Breakdown, otherwise 0
+Call transposeBlock(WsCalc.Range("BOR5:BQO2000"), 35, wsNew) 'RM (COS RESERVE)
+Call transposeBlock(WsCalc.Range("BQP5:BSM2000"), 36, wsNew) 'PPV & RM Std Cost Change Allocation on Gallons
+Call transposeBlock(WsCalc.Range("BSN5:BUK2000"), 37, wsNew) 'RM Costs - Other
+Call transposeBlock(WsCalc.Range("BUL5:BWI2000"), 38, wsNew) 'Total Raw Material Costs
+Call transposeBlock(WsCalc.Range("BMT5:BOQ2000"), 39, wsNew) 'RM + Pkg - Actual Cost
+Call transposeBlock(WsCalc.Range("BWJ5:BYG2000"), 40, wsNew) 'Conversion Costs at Standard
+Call transposeBlock(WsCalc.Range("BYH5:CAE2000"), 41, wsNew) 'Conversion Costs - AVERAGE Standard Cost
+Call transposeBlock(WsCalc.Range("CCD5:CEA2000"), 42, wsNew) 'Under(Over) Absorption & CC Std Cost Change Allocation on Gallons
+Call transposeBlock(WsCalc.Range("CEB5:CFY2000"), 43, wsNew) 'Conversion Costs - Other
+Call transposeBlock(WsCalc.Range("CFZ5:CHW2000"), 44, wsNew) 'Converison Costs - Total
+Call transposeBlock(WsCalc.Range("CAF5:CCC2000"), 45, wsNew) 'Conversion - Actual Cost
+Call transposeBlock(WsCalc.Range("CHX5:CJU2000"), 46, wsNew) 'Warehousing Allocation on Gallons
+Call transposeBlock(WsCalc.Range("CJV5:CLS2000"), 47, wsNew) 'Research & Development
+Call transposeBlock(WsCalc.Range("CLT5:CNQ2000"), 48, wsNew) 'Freight OUT Allocation on Gallons
+Call transposeBlock(WsCalc.Range("CNR5:CPO2000"), 49, wsNew) 'Other COGS
+Call transposeBlock(WsCalc.Range("CPP5:CRM2000"), 50, wsNew) 'GROSS MARGIN $
+Call transposeBlock(WsCalc.Range("CTL5:CVI2000"), 51, wsNew) 'New/Lost Gallons
+Call transposeBlock(WsCalc.Range("CVJ5:CXG2000"), 52, wsNew) 'New/Lost Sales
+Call repeatColumns(WsCalc.Range("CXH6:CXH2000"), 53, RowLen, wsNew) 'Handles Food Breakdown, otherwise 0
 
 
 
@@ -509,11 +493,11 @@ wsNew.Columns(37).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(38).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(39).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(40).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(41).NumberFormat = "#,##0_);[Red](#,##0)"
+wsNew.Columns(41).NumberFormat = "$#,##0.00_);[Red]($#,##0.00)"
 wsNew.Columns(42).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(43).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(44).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(45).NumberFormat = "$#,##0.00_);[Red]($#,##0.00)"
+wsNew.Columns(45).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(46).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(47).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(48).NumberFormat = "#,##0_);[Red](#,##0)"
@@ -521,15 +505,11 @@ wsNew.Columns(49).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(50).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(51).NumberFormat = "#,##0_);[Red](#,##0)"
 wsNew.Columns(52).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(53).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(54).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(55).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(56).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(57).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(58).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(59).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(60).NumberFormat = "#,##0_);[Red](#,##0)"
-wsNew.Columns(61).NumberFormat = "@"
+wsNew.Columns(53).NumberFormat = "@"
 
 End Sub
+
+
+
+
 

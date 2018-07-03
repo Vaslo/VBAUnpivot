@@ -1,0 +1,26 @@
+'Module 1 - Coded shortcuts
+
+
+Sub controlS()
+Application.OnKey "^{,}", "Increase_Decimal"
+Application.OnKey "^{.}", "Decrease_Decimal"
+End Sub
+
+
+Sub Increase_Decimal()
+Application.CommandBars.FindControl(ID:=398).Execute
+End Sub
+
+
+Sub Decrease_Decimal()
+Application.CommandBars.FindControl(ID:=399).Execute
+End Sub
+
+'This Workbook
+
+
+Private Sub Workbook_Open()
+
+Call controlS
+
+End Sub
