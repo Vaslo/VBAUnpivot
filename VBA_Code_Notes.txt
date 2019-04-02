@@ -1,0 +1,114 @@
+
+--------------------------------
+1.5 How to Reference Workbooks
+------------------------------
+Debug.Print will return the WB Name
+
+ActiveWorkbook.Name  'Returns the active workbook in Excel
+
+ThisWorkbook.Name 'Returns the workbook that this code module is in
+
+Workbooks("Name_of_WB").Activate 'Reference the workbook name
+
+Workbooks(1).Name 'Reference the workbook number, basically the order of how WBs open
+
+Workbooks.Count 'Count the number of workbooks currently open
+
+---------------------------------------
+1.6 How to Reference Worksheets
+----------------------------------------
+ActiveSheet.Name 'Returns the name of the Active Sheet in message box
+
+Worksheets("Name_of_WB").Rows.Count 'Reference the name of the worksheet
+
+Worksheets(2).Name 'Reference worksheet number based on sheet order
+
+sheet1.Name  'Reference by the code name, NOT THE SHEET NAME.  Code name is in Macro window, left name of sheet
+'also, this only works within the current WB unless you qualify with WB!
+
+ActiveWorkbook.Worksheets(2).Name    'Qualify with workbook object
+
+Intellisense tip:  
+Sometimes when you do Worksheets(2). you don't get intellisense
+Best way to fix is 1) Use Sheet codename instead to get the method you need 2) Paste worksheet reference over Sheet1
+
+-----------------------------------
+1.7/1.8 How to Reference Ranges
+---------------------------------
+
+ActiveCell.Address  'Returns the active cell
+
+Selection.Address 'Returns a range based on what is selected on the WS
+
+Range("A1").Select  'Selects the range, can also be a range like "A1:A5"
+
+[A1].Select 'Does the same as Range.Select, but shorthand version
+
+Range("named_range").Select 'Allows you to select a particular range by its name
+
+Worksheets("Sheet2").Range("A4").Select  'SELECTING HERE WILL NOT WORK if doing it from Sheet other than Sheet2, must be two seperate transactions
+Right way:
+Worksheets("Sheet2").Select
+Range("A4").Select
+
+For read/set properties, you can use qualified refs even in other windows:
+Worksheets("Sheet1").Range("A3").Value = "Hello"
+
+If TypeName(Selection) = "Range" Then
+	Selection.Address					'Makes sure the type of what is selected is right
+
+Cells.Select  'Selects all cells in the worksheet
+
+Cells(1, 1).Select   'Selects A1 since its Cells(R, C)
+
+Range(Cells(2,1), Cells(5, 2)).Select  'Range of cells from beginning to end
+
+ActiveSheet.Range(ActiveSheet.Cells(2, 1), ActiveSheet.Cells(8,2)).Select  'Same as above but fully qualified for picking a specific sheet and area
+
+Range("A1").Resize(3, 2).Select   'can resize the referenced range
+
+Range("A1").Offset(3, 2).Select  'Offsets down by R(3) and Right by C(2)
+
+ActiveCell(2, 2).Select  'References the current cell selected and acts like offset
+
+Rows(7).Select  or Columns("C:D")  'Use Rows and Columns functions to select entire rows and columns
+
+----------------------------------------
+1.9 Working with Object Properties
+----------------------------------------
+Range("A1").Value   'Gives you the value in that cell
+
+Range("rngAmount").Address   'Gives you the address of a particular named range
+
+Use "Ctrl-i" to see arguments for a given object
+Can get help by hitting F1 while you hover over properties for a given object
+
+Range("A1").Value = "Goodbye"    'Changes the cell's value to goodbye
+
+Range("A1").Formula = "=2+3"  'Puts formula in that cell
+
+Range("A1").Interior.Color = vbGreen  'Changes the cell's color 
+
+Using Properties/Arguments with objects:
+Range("A1").Resize(3, 4).Value = 10   'Extends single cell range to a block, then assigns 10 in all over those code
+Range("A5:D5").Borders(xlEdgeBottom).LineStyle = xlSolid  'Adds line to bottom of block
+
+----------------------------------------
+1.9 Working with Object Methods
+----------------------------------------
+
+Methods have the green looking cubes in the list, Ctrl-i to bring up all the arguments
+
+Range("A3:A5").Select  'Just selects the range
+
+Range("A1").Copy Range("A6")  ' Copy which has an argument which is where you want to paste it
+
+Worksheets.Add Before:=Worksheets(1)  'Add an object, in this case a sheet
+
+Worksheets("Sheet1").Select  'Selecting an object
+
+Cells.ClearContents  'Clears the content of specific if indicated or in this case, do a full clear on the current WS
+
+Cells.Clear  'Clears more than just the content - also clears ALL format
+
+
